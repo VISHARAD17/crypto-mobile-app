@@ -7,12 +7,12 @@ import {
     Image,
 } from 'react-native';
 // import { TouchableOpacity } from '@gorhom/bottom-sheet';
-const ListItem = ({name, symbol, currentPrice, priceChangePercentage7d, logoURL}) => {
+const ListItem = ({name, symbol, currentPrice, priceChangePercentage7d, logoURL, onPress}) => {
     
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';
     
     return ( 
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
         <View style = {styles.itemWrapper}>
             {/* Left Side */}
             <View style = {styles.leftWrapper}>

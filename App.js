@@ -1,4 +1,6 @@
-import { StatusBar } from 'expo-status-bar';
+// the below import is necessary to
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
     StyleSheet,
     Text,
@@ -6,7 +8,10 @@ import {
     FlatList,
     SafeAreaView
   } from 'react-native';
-import BottomSheet from '@gorhom/bottom-sheet';
+  import {
+    BottomSheetModal,
+    BottomSheetModalProvider,
+  } from '@gorhom/bottom-sheet';
 import ListItem from './components/ListItem';
 import { SAMPLE_DATA } from './assets/data/sampleData';
 
@@ -22,23 +27,49 @@ const ListHeader = () => {
 }
 
 export default function App() {
+
+  // ref
+  const bottomSheetModalRef = useRef(null);
+  // variables
+  const snapPoints = useMemo(() => ['50%'], []);
+
+  const openModal = () => {
+    bottomSheetModalRef.current.present();
+  }
+
   return (
-      <SafeAreaView style = {styles.container}>
-        <FlatList
-          keyExtractor={(item) => item.id}
-          data = {SAMPLE_DATA}
-          renderItem = {({item}) => (
-            <ListItem 
-              name = {item.name}
-              symbol = {item.symbol}
-              currentPrice = {item.current_price}
-              priceChangePercentage7d = {item.price_change_percentage_7d_in_currency}
-              logoURL = {item.image}
-            />
-          )}
-          ListHeaderComponent = {<ListHeader/>}
-        />
-      </SafeAreaView>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <SafeAreaView style = {styles.container}>
+          <FlatList
+            keyExtractor={(item) => item.id}
+            data = {SAMPLE_DATA}
+            renderItem = {({item}) => (
+              <ListItem 
+                name = {item.name}
+                symbol = {item.symbol}
+                currentPrice = {item.current_price}
+                priceChangePercentage7d = {item.price_change_percentage_7d_in_currency}
+                logoURL = {item.image}
+                onPress = {() => openModal()}
+              />
+            )}
+            ListHeaderComponent = {<ListHeader/>}
+          />
+        </SafeAreaView>
+          <BottomSheetModal
+            ref={bottomSheetModalRef}
+            index={0}
+            snapPoints={snapPoints}
+            style = {styles.bottomSheet}
+          >
+            <View style={styles.contentContainer}>
+              <Text>bottomsheet</Text>
+            </View>
+          </BottomSheetModal>
+        
+      </BottomSheetModalProvider>
+    </GestureHandlerRootView>
   );
 }
 
@@ -64,5 +95,15 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     // color: '#fff',
-  }
+  },
+  bottomSheet: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: -4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 });
