@@ -6,7 +6,7 @@ import {
     StyleSheet,
     Image,
 } from 'react-native';
-
+// import { TouchableOpacity } from '@gorhom/bottom-sheet';
 const ListItem = ({name, symbol, currentPrice, priceChangePercentage7d, logoURL}) => {
     
     const priceChangeColor = priceChangePercentage7d > 0 ? '#34C759' : '#FF3B30';

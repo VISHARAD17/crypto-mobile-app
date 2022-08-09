@@ -6,8 +6,8 @@ import {
     FlatList,
     SafeAreaView
   } from 'react-native';
-// import { registerRootComponent } from 'expo';
-// import BottomSheet from '@gorhom/bottom-sheet';
+import BottomSheet from 'react-native-bottomsheet-reanimated';
+
 import ListItem from './components/ListItem';
 import { SAMPLE_DATA } from './assets/data/sampleData';
 // import { StretchyScrollView } from 'react-native-stretchy';
