@@ -14,6 +14,7 @@ import {
   } from '@gorhom/bottom-sheet';
 import ListItem from './components/ListItem';
 import { SAMPLE_DATA } from './assets/data/sampleData';
+import Chart from './components/Chart';
 
 const ListHeader = () => {
   return(
@@ -28,12 +29,14 @@ const ListHeader = () => {
 
 export default function App() {
 
+  const [selectedCoinData, setSelectedCoinData] = useState(null);
   // ref
   const bottomSheetModalRef = useRef(null);
   // variables
   const snapPoints = useMemo(() => ['50%'], []);
 
-  const openModal = () => {
+  const openModal = (item) => {
+    setSelectedCoinData(item);
     bottomSheetModalRef.current.present();
   }
 
@@ -51,7 +54,7 @@ export default function App() {
                 currentPrice = {item.current_price}
                 priceChangePercentage7d = {item.price_change_percentage_7d_in_currency}
                 logoURL = {item.image}
-                onPress = {() => openModal()}
+                onPress = {() => openModal(item)}
               />
             )}
             ListHeaderComponent = {<ListHeader/>}
@@ -63,9 +66,15 @@ export default function App() {
             snapPoints={snapPoints}
             style = {styles.bottomSheet}
           >
-            <View style={styles.contentContainer}>
-              <Text>bottomsheet</Text>
-            </View>
+          {/* if the selected coin data exists then show it otherwise null */}
+          { selectedCoinData ? (<Chart 
+              currentPrice = {selectedCoinData.current_price}
+              logoURL = {selectedCoinData.image}
+              name = {selectedCoinData.name}
+              priceChangePercentage7d = {selectedCoinData.price_change_percentage_7d_in_currency}
+              sparkline = {selectedCoinData.sparkline_in_7d.price}
+           />)
+          : null}
           </BottomSheetModal>
         
       </BottomSheetModalProvider>
@@ -97,13 +106,13 @@ const styles = StyleSheet.create({
     // color: '#fff',
   },
   bottomSheet: {
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: -4,
+      height: 12,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
+    shadowOpacity: 0.58,
+    shadowRadius: 20.00,
+    elevation: 24,
   },
 });
