@@ -71,6 +71,7 @@ export default function App() {
               currentPrice = {selectedCoinData.current_price}
               logoURL = {selectedCoinData.image}
               name = {selectedCoinData.name}
+              symbol = {selectedCoinData.symbol}
               priceChangePercentage7d = {selectedCoinData.price_change_percentage_7d_in_currency}
               sparkline = {selectedCoinData.sparkline_in_7d.price}
            />)
@@ -106,6 +107,7 @@ const styles = StyleSheet.create({
     // color: '#fff',
   },
   bottomSheet: {
+    backgroundColor : 'yellow',
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
