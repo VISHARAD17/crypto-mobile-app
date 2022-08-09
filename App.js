@@ -1,20 +1,70 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    FlatList,
+    SafeAreaView
+  } from 'react-native';
+// import { registerRootComponent } from 'expo';
+// import BottomSheet from '@gorhom/bottom-sheet';
+import ListItem from './components/ListItem';
+import { SAMPLE_DATA } from './assets/data/sampleData';
+// import { StretchyScrollView } from 'react-native-stretchy';
+
+const ListHeader = () => {
+  return(
+    <>
+      <View style = {styles.titleWraper}>
+        <Text style = {styles.largeTitle}>Crypto</Text>
+      </View>
+      <View style = {styles.divider} />
+  </>
+  )
+}
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+      <SafeAreaView style = {styles.container}>
+        <FlatList
+          keyExtractor={(item) => item.id}
+          data = {SAMPLE_DATA}
+          renderItem = {({item}) => (
+            <ListItem 
+              name = {item.name}
+              symbol = {item.symbol}
+              currentPrice = {item.current_price}
+              priceChangePercentage7d = {item.price_change_percentage_7d_in_currency}
+              logoURL = {item.image}
+            />
+          )}
+          ListHeaderComponent = {<ListHeader/>}
+        />
+      </SafeAreaView>
   );
 }
 
+// registerRootComponent(App);
+
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  divider: {
+    height: StyleSheet.hairlineWidth,
+    // color: '#A9ABB1',
+    backgroundColor: '#A9ABB1',
+    borderRadius: 10,
+    marginHorizontal: 16,
+    marginTop: 16,
+  },  
+  titleWraper: {
+    marginTop: 80,
+    paddingHorizontal:16
   },
+  container: {
+    backgroundColor: '#fff'
+  },
+  largeTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    // color: '#fff',
+  }
 });
