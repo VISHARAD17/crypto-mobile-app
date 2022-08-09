@@ -6,11 +6,9 @@ import {
     FlatList,
     SafeAreaView
   } from 'react-native';
-import BottomSheet from 'react-native-bottomsheet-reanimated';
-
+import BottomSheet from '@gorhom/bottom-sheet';
 import ListItem from './components/ListItem';
 import { SAMPLE_DATA } from './assets/data/sampleData';
-// import { StretchyScrollView } from 'react-native-stretchy';
 
 const ListHeader = () => {
   return(
